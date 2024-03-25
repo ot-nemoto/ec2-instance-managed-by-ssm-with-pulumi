@@ -1,0 +1,7 @@
+name: ec2-instance-managed-by-ssm-with-pulumi
+runtime: nodejs
+description: SSM で管理するプライベートネットワークのインスタンスを作成する
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
