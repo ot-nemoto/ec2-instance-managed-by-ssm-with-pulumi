@@ -21,4 +21,14 @@ const privateSubnet = new aws.ec2.Subnet('private', {
     },
 });
 
-export const vpc = mainVpc.id;
+const instance = new aws.ec2.Instance('instance', {
+    ami: 'ami-0eba6c58b7918d3a1',
+    instanceType: 't2.micro',
+    subnetId: privateSubnet.id,
+
+    tags: {
+        Name: config.name,
+    },
+});
+
+export const instance_id = instance.id;

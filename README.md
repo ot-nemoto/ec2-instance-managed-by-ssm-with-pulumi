@@ -14,3 +14,9 @@ export AWS_SECRET_ACCESS_KEY=
 ```sh
 pulumi up
 ```
+
+### インフラストラクチャの削除
+
+```sh
+pulumi destroy
+```
