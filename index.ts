@@ -24,6 +24,67 @@ const privateSubnet = new aws.ec2.Subnet('private', {
     },
 });
 
+const securityGroup = new aws.ec2.SecurityGroup('vpc_endpoint', {
+    vpcId: mainVpc.id,
+
+    tags: {
+        Name: config.name,
+    },
+});
+
+const ingressRule = new aws.vpc.SecurityGroupIngressRule('allow_tls_ipv4', {
+    securityGroupId: securityGroup.id,
+    cidrIpv4: mainVpc.cidrBlock,
+    ipProtocol: 'tcp',
+    fromPort: 443,
+    toPort: 443,
+});
+
+const egressRule = new aws.vpc.SecurityGroupEgressRule('allow_all_traffic_ipv4', {
+    securityGroupId: securityGroup.id,
+    cidrIpv4: '0.0.0.0/0',
+    ipProtocol: '-1',
+});
+
+const ssmVpcEndpoint = new aws.ec2.VpcEndpoint('ssm', {
+    vpcId: mainVpc.id,
+    subnetIds: [privateSubnet.id],
+    serviceName: 'com.amazonaws.ap-northeast-1.ssm',
+    vpcEndpointType: 'Interface',
+    privateDnsEnabled: true,
+    securityGroupIds: [securityGroup.id],
+
+    tags: {
+        Name: config.name,
+    },
+});
+
+const ec2messagesVpcEndpoint = new aws.ec2.VpcEndpoint('ec2messages', {
+    vpcId: mainVpc.id,
+    subnetIds: [privateSubnet.id],
+    serviceName: 'com.amazonaws.ap-northeast-1.ec2messages',
+    vpcEndpointType: 'Interface',
+    privateDnsEnabled: true,
+    securityGroupIds: [securityGroup.id],
+
+    tags: {
+        Name: config.name,
+    },
+});
+
+const ssmmessagesVpcEndpoint = new aws.ec2.VpcEndpoint('ssmmessages', {
+    vpcId: mainVpc.id,
+    subnetIds: [privateSubnet.id],
+    serviceName: 'com.amazonaws.ap-northeast-1.ssmmessages',
+    vpcEndpointType: 'Interface',
+    privateDnsEnabled: true,
+    securityGroupIds: [securityGroup.id],
+
+    tags: {
+        Name: config.name,
+    },
+});
+
 // =============================================================================
 // Compute
 // =============================================================================
