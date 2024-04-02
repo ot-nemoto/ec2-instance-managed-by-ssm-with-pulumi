@@ -6,23 +6,34 @@ const config = new pulumi.Config();
 // =============================================================================
 // Networking
 // =============================================================================
-const mainVpc = new aws.ec2.Vpc('main', {
-    cidrBlock: '10.0.0.0/16',
-    enableDnsHostnames: true,
 
-    tags: {
-        Name: config.name,
-    },
-});
+let mainVpc;
+if (config.get('vpc_id')) {
+    mainVpc = aws.ec2.Vpc.get('main', config.get('vpc_id') || '');
+} else {
+    mainVpc = new aws.ec2.Vpc('main', {
+        cidrBlock: '10.0.0.0/16',
+        enableDnsHostnames: true,
 
-const privateSubnet = new aws.ec2.Subnet('private', {
-    vpcId: mainVpc.id,
-    cidrBlock: '10.0.1.0/24',
+        tags: {
+            Name: config.name,
+        },
+    });
+}
 
-    tags: {
-        Name: config.name,
-    },
-});
+let privateSubnet;
+if (config.get('vpc_id') && config.get('subnet_id')) {
+    privateSubnet = aws.ec2.Subnet.get('private', config.get('subnet_id') || '');
+} else {
+    privateSubnet = new aws.ec2.Subnet('private', {
+        vpcId: mainVpc.id,
+        cidrBlock: '10.0.1.0/24',
+
+        tags: {
+            Name: config.name,
+        },
+    });
+}
 
 const securityGroup = new aws.ec2.SecurityGroup('vpc_endpoint', {
     vpcId: mainVpc.id,
