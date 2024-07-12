@@ -6,6 +6,16 @@
 
 ### 事前準備
 
+login pulumi
+
+```sh
+pulumi login
+  # Manage your Pulumi stacks by logging in.
+  # Run `pulumi login --help` for alternative login options.
+  # Enter your access token from https://app.pulumi.com/account/tokens
+  #     or hit <ENTER> to log in using your browser                   :
+```
+
 ```sh
 export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=

@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-    "name": "quickstart",
+    "name": "ec2-instance-managed-by-ssm-with-pulumi",
     // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
     "features": {
@@ -16,7 +16,7 @@
     // "forwardPorts": [],
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "yarn install",
+    "postCreateCommand": "git config --global --add safe.directory /workspaces/ec2-instance-managed-by-ssm-with-pulumi",
 
     // Configure tool-specific properties.
     "customizations": {
