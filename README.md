@@ -6,10 +6,10 @@
 
 ### 事前準備
 
-login pulumi
+login
 
 ```sh
-pulumi login
+pulumi login [--local]
   # Manage your Pulumi stacks by logging in.
   # Run `pulumi login --help` for alternative login options.
   # Enter your access token from https://app.pulumi.com/account/tokens
